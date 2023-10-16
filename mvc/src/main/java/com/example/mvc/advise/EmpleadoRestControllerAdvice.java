@@ -4,6 +4,7 @@ import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.HttpMediaTypeNotAcceptableException;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -26,6 +27,10 @@ public class EmpleadoRestControllerAdvice {
 		
 		for (FieldError fieldError : e.getFieldErrors()) {
 			errorText += fieldError.getField() + ":" + fieldError.getDefaultMessage() + " -- ";
+		}
+		
+		for (ObjectError objectError : e.getGlobalErrors()) {
+			errorText += objectError.getDefaultMessage() + " -- ";
 		}
 		
 		ApiError error = new ApiError(400, errorText);

@@ -1,12 +1,16 @@
 package com.example.mvc.config;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import com.example.mvc.model.Empleado;
 
@@ -27,4 +31,8 @@ public class AppConfiguration {
 		return empleados;
 	}
 	
+	@Bean
+	List<SseEmitter> sseEmitters() {
+		return Collections.synchronizedList(new ArrayList<>());
+	}
 }

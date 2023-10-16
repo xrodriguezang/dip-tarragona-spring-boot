@@ -3,9 +3,8 @@ package com.example.mvc.model;
 import java.math.BigDecimal;
 import java.util.UUID;
 
-import javax.validation.constraints.NotNull;
-
 import com.example.mvc.annotation.ExpresionValidacion;
+import com.example.mvc.annotation.ExpresionValidaciones;
 import com.example.mvc.annotation.MinValor;
 
 import lombok.AllArgsConstructor;
@@ -15,10 +14,12 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ExpresionValidacion(value = "!(#this.nombre == null)", message = "El nombre no puede ser nulo")
-//@ExpresionValidacion(value = "!(#this.email == null)", message = "El email no puede ser nulo")
+@ExpresionValidaciones(value = {
+	@ExpresionValidacion(value = "!(#this.nombre == null)", message = "El nombre no puede ser nulo"),
+	@ExpresionValidacion(value = "!(#this.email == null)", message = "El email no puede ser nulo")
+})
 public class Empleado {
-	@NotNull
+//	@NotNull
 	private UUID id;
 	private String nombre;
 	private String email;

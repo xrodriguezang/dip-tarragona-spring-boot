@@ -14,16 +14,23 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import com.example.mvc.model.Empleado;
 import com.example.mvc.service.IEmpleadoService;
 
+import lombok.extern.slf4j.Slf4j;
+
 @RestController
 @RequestMapping("/api")
+@Slf4j
 public class EmpleadoRestController {
 	
 	@Autowired
 	IEmpleadoService empleadoService;
+	
+	@Autowired
+	List<SseEmitter> sseEmitters;
 	
 	@GetMapping(path = "/empleados")
 	public List<Empleado> findAllEmpleados() {
@@ -47,6 +54,25 @@ public class EmpleadoRestController {
 		produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 	public Empleado createEmpleado(@Validated @RequestBody Empleado empleado) {
 		return empleadoService.create(empleado);
+	}
+	
+	@GetMapping("/subscriptions/empleados")
+	public SseEmitter streamEmpleados() {
+		SseEmitter emitter = new SseEmitter(Long.MAX_VALUE);
+		
+		sseEmitters.add(emitter);
+		
+		emitter.onCompletion(() -> {
+			log.info("Eliminando emitter:{}", emitter);
+			sseEmitters.remove(emitter);
+		});
+		
+		emitter.onError(t -> {
+			log.info("Eliminando emitter [{}]:{}", t.getMessage(), emitter);
+			sseEmitters.remove(emitter);
+		});
+		
+		return emitter;
 	}
 	
 }

@@ -15,7 +15,6 @@ public class ExpresionValidator implements ConstraintValidator<ExpresionValidaci
 	private ExpressionParser expressionParser = new SpelExpressionParser();
 	private Expression parsedExpression;
 	
-	
 	@Override
 	public void initialize(ExpresionValidacion annotation) {
 		ConstraintValidator.super.initialize(annotation);
@@ -26,9 +25,7 @@ public class ExpresionValidator implements ConstraintValidator<ExpresionValidaci
 	public boolean isValid(Object value, ConstraintValidatorContext context) {
 		StandardEvaluationContext spelContext = new StandardEvaluationContext(value);
 		
-		return (Boolean) parsedExpression.getValue(spelContext);
+		return (boolean) parsedExpression.getValue(spelContext);
 	}
-	
-	
-	
+
 }
