@@ -61,14 +61,13 @@ public class EmpleadoRestController {
 		SseEmitter emitter = new SseEmitter(Long.MAX_VALUE);
 		
 		sseEmitters.add(emitter);
-		
 		emitter.onCompletion(() -> {
-			log.info("Eliminando emitter:{}", emitter);
+			log.info("Emitter Completed!");
 			sseEmitters.remove(emitter);
 		});
 		
-		emitter.onError(t -> {
-			log.info("Eliminando emitter [{}]:{}", t.getMessage(), emitter);
+		emitter.onError(e -> {
+			log.error("Error en emitter:{}", e.getMessage());
 			sseEmitters.remove(emitter);
 		});
 		

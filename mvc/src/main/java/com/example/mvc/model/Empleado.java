@@ -14,9 +14,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ExpresionValidaciones(value = {
-	@ExpresionValidacion(value = "!(#this.nombre == null)", message = "El nombre no puede ser nulo"),
-	@ExpresionValidacion(value = "!(#this.email == null)", message = "El email no puede ser nulo")
+@ExpresionValidaciones({
+	@ExpresionValidacion(value = "#this.nombre != null", message = "El nombre no puede ser nulo"),
+	@ExpresionValidacion(value = "#this.email != null", message = "El email no puede ser nulo")
 })
 public class Empleado {
 //	@NotNull

@@ -25,12 +25,12 @@ public class EmpleadoRestControllerAdvice {
 		
 		String errorText = "";
 		
-		for (FieldError fieldError : e.getFieldErrors()) {
-			errorText += fieldError.getField() + ":" + fieldError.getDefaultMessage() + " -- ";
-		}
-		
 		for (ObjectError objectError : e.getGlobalErrors()) {
 			errorText += objectError.getDefaultMessage() + " -- ";
+		}
+		
+		for (FieldError fieldError : e.getFieldErrors()) {
+			errorText += fieldError.getField() + ":" + fieldError.getDefaultMessage() + " -- ";
 		}
 		
 		ApiError error = new ApiError(400, errorText);
