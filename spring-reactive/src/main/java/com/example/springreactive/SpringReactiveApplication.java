@@ -1,10 +1,5 @@
 package com.example.springreactive;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-import javax.annotation.PostConstruct;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -27,18 +22,31 @@ public class SpringReactiveApplication {
 	
 //	@PostConstruct
 	public void init() {
-//		integers.subscribe(i -> log.info("en Main:{}", i));
-//		integers.doOnNext(i -> log.info("en Main:{}", i));
-//		log.info("aqui");
+		integers.subscribe(i -> log.info("Añadido {}", i));
 		
-		log.info("Threads:{}", getThreads());
+		Flux<String> fluxString = Flux.just("e1", "e2", "e3");
+//		fluxString.subscribe(System.out::println);
+		
+		fluxString.subscribe(
+			data -> onNext(data),
+			err -> onError(err),
+			() -> onComplete()
+		);
+		
+		log.info("AQUI");
+		
 	}
 	
-	private List<Thread> getThreads() {
-		return Thread.getAllStackTraces()
-			.keySet()
-			.stream()
-			.collect(Collectors.toList());
+	private void onNext(String data) {
+		log.info("Data:{}", data);
 	}
 	
+	private void onError(Throwable err) {
+		log.info("Error:{}", err.getMessage());
+	}
+	
+	private void onComplete() {
+		log.info("Completed!");
+	}
+
 }

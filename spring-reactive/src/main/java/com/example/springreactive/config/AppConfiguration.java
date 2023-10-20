@@ -19,18 +19,15 @@ public class AppConfiguration {
 	Flux<Integer> integers() {
 		List<Integer> ints = new ArrayList<>(Arrays.asList(17, 10, 5, 20));
 		
-		log.info("Nums < 10: {}", ints.stream().filter(i -> i > 10).toList());
-		
+		//Crear Stream
 		Stream<Integer> intStream = ints.stream();
 		
+		//Crear el Flux desde el Stream
 		Flux<Integer> fluxFromStream = Flux.fromStream(intStream);
 		
-		
-		
-		log.info("en config");
+//		fluxFromStream.subscribe(i -> log.info("{}", i));
 		
 		return fluxFromStream;
-		
 	}
 	
 }
