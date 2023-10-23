@@ -26,12 +26,7 @@ public class ReactiveRestController implements ReactiveController {
 	public Mono<String> getHolaNundo() {
 		return Mono.just("Hola mundo!");
 	}
-	
-	@Override
-	public String getHolaNundo2() {
-		return "Hola mundo2!";
-	}
-	
+		
 	@Override
 	public List<Spell> getRestTemplateSpells() {
 		return publicApiService.getSpellsRestTemplate();
@@ -46,13 +41,21 @@ public class ReactiveRestController implements ReactiveController {
 
 	@Override
 	public Flux<Spell> getWebClientSpells() {
-		return publicApiService.getSpellsWebClient();
+		log.info("Antes de controller");
+		Flux<Spell> spells = publicApiService.getSpellsWebClient();
+		
+		log.info("Después de controller");
+		return spells;
 	}
-	
+
 	@Override
-	public Flux<Wizard> getWebClientWizards() {
-		List<UUID> uids = Arrays.asList(UUID.fromString("9e3f7ce4-b9a7-4244-b709-dae5c1f1d4a8"), UUID.fromString("4c7e6819-a91a-45b2-a454-f931e4a7cce3"), UUID.fromString("c3b1f9a5-b87b-48bf-b00d-95b093ea6390"));
-		return publicApiService.getWizards(uids);
+	public Flux<Wizard> geWebClientWizards() {
+		log.info("Antes de controller");
+		List<UUID> uuids = Arrays.asList(UUID.fromString("9e3f7ce4-b9a7-4244-b709-dae5c1f1d4a8"), UUID.fromString("4c7e6819-a91a-45b2-a454-f931e4a7cce3"), UUID.fromString("c3b1f9a5-b87b-48bf-b00d-95b093ea6390"));
+		Flux<Wizard> wizards = publicApiService.getWizards(uuids);
+		
+		log.info("Después de controller");
+		return wizards;
 	}
-	
+		
 }

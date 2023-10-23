@@ -16,10 +16,7 @@ public interface ReactiveController {
 	
 	@GetMapping("/test")
 	Mono<String> getHolaNundo();
-	
-	@GetMapping("/test2")
-	String getHolaNundo2();
-	
+		
 	@GetMapping("/rest-template/spells")
 	List<Spell> getRestTemplateSpells();
 	
@@ -30,6 +27,6 @@ public interface ReactiveController {
 	Flux<Spell> getWebClientSpells();
 	
 	@GetMapping("/web-client/wizards")
-	Flux<Wizard> getWebClientWizards();
+	Flux<Wizard> geWebClientWizards();
 
 }
