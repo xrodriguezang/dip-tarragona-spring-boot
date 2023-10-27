@@ -1,6 +1,7 @@
 package com.curso.demojpa.entity;
 
-import javax.persistence.CascadeType;
+import java.time.LocalDateTime;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
@@ -8,7 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -19,21 +20,21 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity(name ="StudentIdCard")
+@Entity(name ="Book")
 @Table(
-	name = "student_id_card"
+	name = "book"
 )
-public class StudentIdCard {
+public class Book {
 	
 	@Id
     @SequenceGenerator(
-            name = "student_card_id_sequence",
-            sequenceName = "student_card_id_sequence",
+            name = "book_sequence",
+            sequenceName = "book_sequence",
             allocationSize = 1
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "student_card_id_sequence"
+            generator = "book_sequence"
     )
     @Column(
             name = "id",
@@ -42,18 +43,27 @@ public class StudentIdCard {
     private Long id;
 	
 	@Column(
-            name = "card_number",
+            name = "created_at",
             nullable = false,
-            length = 15,
-            unique = true
+            columnDefinition = "TIMESTAMP WITHOUT TIME ZONE"
     )
-    private String cardNumber;
-	
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(
+    private LocalDateTime createdAt;
+
+    @Column(
+            name = "book_name",
+            nullable = false
+    )
+    private String bookName;
+    
+    @ManyToOne
+    @JoinColumn(
 		name = "student_id",
-		referencedColumnName = "id",
-		foreignKey = @ForeignKey(name = "student_id_fk")
-	)
-	private Student student;
+        nullable = false,
+        referencedColumnName = "id",
+        foreignKey = @ForeignKey(
+                name = "student_book_fk"
+        )
+    )
+    private Student student;
+	
 }

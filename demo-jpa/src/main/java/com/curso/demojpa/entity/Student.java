@@ -1,10 +1,16 @@
 package com.curso.demojpa.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -28,6 +34,16 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Student {
+	
+	public Student(String firstName, String lastName, String email, Integer age) {
+		super();
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.age = age;
+	}
+	
+	
 	@Id
 	@SequenceGenerator(
 		name = "student_sequence",
@@ -77,13 +93,13 @@ public class Student {
 		orphanRemoval = true
 	)
 	private StudentIdCard studentIdCard;
-
-	public Student(String firstName, String lastName, String email, Integer age) {
-		super();
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.email = email;
-		this.age = age;
-	}
+	
+	@OneToMany(
+		mappedBy = "student",
+		orphanRemoval = true,
+		cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
+		fetch = FetchType.LAZY
+	)
+	private List<Book> books = new ArrayList<>();
 	
 }

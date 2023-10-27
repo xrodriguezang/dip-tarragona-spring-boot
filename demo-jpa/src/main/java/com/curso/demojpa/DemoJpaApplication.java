@@ -32,6 +32,15 @@ public class DemoJpaApplication {
 			
 			log.info("Estudiantes #{}", studentRepository.count());
 			
+//			List<Student> students = studentRepository.findAll();
+//			for (Student student : students) {
+//				log.info("Estudiante:{}", student);
+//			}
+//			
+//			studentRepository.deleteById(1L);
+//			
+//			log.info("Estudiantes después de delete #{}", studentRepository.count());
+			
 			try {
 				studentService.deleteAndSelect();
 			}
@@ -41,20 +50,6 @@ public class DemoJpaApplication {
 			
 			log.info("Estudiantes #{}", studentRepository.count());
 			
-//			List<Student> students = studentRepository.findAll();
-//			for (Student student : students) {
-//				log.info("Estudiante:{}", student);
-//			}
-//			
-//			studentRepository.deleteById(1L);
-//			
-//			log.info("Estudiantes después de delete #{}", studentRepository.count());
-//			
-//			studentRepository
-//				.findStudentByEmail("pepe.garcia@email.com")
-//				.ifPresentOrElse(System.out::println, () -> System.err.println("Estudiante no existe"));
-//			
-//			log.info("Estudiantes Nativo:{}", studentRepository.selectStudentWhereFirstNameAndAgeGreaterOrEqualNative("Pepe", 18));
 		};
 	}
 

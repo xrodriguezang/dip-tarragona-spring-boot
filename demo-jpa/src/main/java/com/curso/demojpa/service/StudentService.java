@@ -22,27 +22,28 @@ public class StudentService {
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void deleteAndSelect() {
 		log.info("deleteAndSelect antes: {}", studentRepository.count());
-		
 		studentRepository.deleteById(1L);
+		
 		try {
-			log.info("Durmiendo");
-			Thread.sleep(20000);
+			log.info("Durmiendo:{}", studentRepository.count());
+			Thread.sleep(30000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 		log.info("deleteAndSelect después de delete: {}", studentRepository.count());
 		try {
-			log.info("Students deleteAndSelect:{}", findAll());
+			log.info("Students deleteAndSelect:{}", deleteAndfind());
 		} catch(Exception e) {}
 		log.info("deleteAndSelect después de findAll: {}", studentRepository.count());
 	}
 	
 	@Transactional(propagation = Propagation.REQUIRED)
-	public List<Student> findAll() {
+	public List<Student> deleteAndfind() {
 		log.info("deleteAndSelect ants de findAll: {}", studentRepository.count());
 		studentRepository.deleteById(2L);
-		return studentRepository.selectStudentWhereFirstNameAndAgeGreaterOrEqualNative("Pepe", 18);
+		return studentRepository.findStudentWhereFirstNameAndAgeGreaterOrEqualNative("Pepe", 18);
 	}
 	
 }
